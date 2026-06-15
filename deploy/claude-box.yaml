@@ -25,6 +25,9 @@ spec:
         imagePullPolicy: Always
         stdin: true
         tty: true
+        env:
+        - name: GOOGLE_APPLICATION_CREDENTIALS
+          value: /var/secrets/gcp/application_default_credentials.json
         envFrom:
         - secretRef:
             name: claude-box-secrets
@@ -32,6 +35,17 @@ spec:
         volumeMounts:
         - name: workspace
           mountPath: /workspace
+        - name: gcp-credentials
+          mountPath: /var/secrets/gcp
+          readOnly: true
+      volumes:
+      - name: gcp-credentials
+        secret:
+          secretName: claude-box-secrets
+          optional: true
+          items:
+          - key: application_default_credentials.json
+            path: application_default_credentials.json
   volumeClaimTemplates:
   - metadata:
       name: workspace
