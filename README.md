@@ -41,6 +41,30 @@ docker run --rm -it \
 
 All additional Claude Code flags can be passed as arguments after the image name.
 
+## Deploy to Kubernetes
+
+Create a `.env` file with your credentials:
+
+```bash
+ANTHROPIC_API_KEY=sk-ant-...
+GH_TOKEN=ghp_...
+CLOUD_ML_REGION=us-east5
+ANTHROPIC_VERTEX_PROJECT_ID=my-project-id
+CLAUDE_CODE_OAUTH_TOKEN=oauth-...
+```
+
+Then deploy:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/zeeke/cloude-box/main/deploy.sh | sh
+```
+
+Connect to the box:
+
+```bash
+kubectl exec -it claude-box -- claude
+```
+
 ## CI Setup
 
 The GitHub Actions workflow builds and pushes to `quay.io/apanatto/claude-box` on every push to `main`.

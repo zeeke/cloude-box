@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: claude-box-workspace
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: claude-box
+spec:
+  containers:
+  - name: claude
+    image: quay.io/apanatto/claude-box:latest
+    stdin: true
+    tty: true
+    envFrom:
+    - secretRef:
+        name: claude-box-secrets
+    workingDir: /workspace
+    volumeMounts:
+    - name: workspace
+      mountPath: /workspace
+  volumes:
+  - name: workspace
+    persistentVolumeClaim:
+      claimName: claude-box-workspace
