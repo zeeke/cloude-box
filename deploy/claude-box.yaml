@@ -22,6 +22,7 @@ spec:
       containers:
       - name: claude
         image: quay.io/apanatto/claude-box:latest
+        imagePullPolicy: Always
         stdin: true
         tty: true
         envFrom:
