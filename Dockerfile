@@ -5,6 +5,8 @@ RUN dnf install -y \
     git \
     ca-certificates \
     ripgrep \
+    gh \
+    golang \
     && dnf clean all
 
 RUN curl -fsSL https://claude.ai/install.sh | bash
