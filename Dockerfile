@@ -18,6 +18,7 @@ RUN curl -fsSL https://claude.ai/install.sh | bash
 
 ENV PATH="/root/.local/bin:$PATH"
 ENV CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1
+ENV CLAUDE_CODE_SKIP_INITIAL_SETUP=1
 
 WORKDIR /workspace
 
