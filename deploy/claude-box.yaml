@@ -3,37 +3,40 @@ kind: Namespace
 metadata:
   name: claude-box
 ---
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: claude-box-workspace
-  namespace: claude-box
-spec:
-  accessModes:
-  - ReadWriteOnce
-  resources:
-    requests:
-      storage: 5Gi
----
-apiVersion: v1
-kind: Pod
+apiVersion: apps/v1
+kind: StatefulSet
 metadata:
   name: claude-box
   namespace: claude-box
 spec:
-  containers:
-  - name: claude
-    image: quay.io/apanatto/claude-box:latest
-    stdin: true
-    tty: true
-    envFrom:
-    - secretRef:
-        name: claude-box-secrets
-    workingDir: /workspace
-    volumeMounts:
-    - name: workspace
-      mountPath: /workspace
-  volumes:
-  - name: workspace
-    persistentVolumeClaim:
-      claimName: claude-box-workspace
+  replicas: 3
+  serviceName: claude-box
+  selector:
+    matchLabels:
+      app: claude-box
+  template:
+    metadata:
+      labels:
+        app: claude-box
+    spec:
+      containers:
+      - name: claude
+        image: quay.io/apanatto/claude-box:latest
+        stdin: true
+        tty: true
+        envFrom:
+        - secretRef:
+            name: claude-box-secrets
+        workingDir: /workspace
+        volumeMounts:
+        - name: workspace
+          mountPath: /workspace
+  volumeClaimTemplates:
+  - metadata:
+      name: workspace
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 5Gi

@@ -7,6 +7,11 @@ RUN dnf install -y \
     ripgrep \
     gh \
     golang \
+    tmux \
+    procps-ng \
+    iproute \
+    net-tools \
+    bind-utils \
     && dnf clean all
 
 RUN curl -fsSL https://claude.ai/install.sh | bash
@@ -16,4 +21,4 @@ ENV CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1
 
 WORKDIR /workspace
 
-ENTRYPOINT ["claude", "--dangerously-skip-permissions"]
+ENTRYPOINT ["tmux", "new-session", "-A", "-s", "claude", "claude", "--dangerously-skip-permissions"]

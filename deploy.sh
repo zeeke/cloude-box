@@ -17,4 +17,4 @@ kubectl create secret generic claude-box-secrets \
   --from-env-file="$ENV_FILE" \
   --dry-run=client -o yaml | kubectl apply -f -
 
-echo "Ready. Run: kubectl exec -it claude-box -n claude-box -- claude"
+echo "Ready. Run: kubectl exec -it claude-box-0 -n claude-box -- claude"
