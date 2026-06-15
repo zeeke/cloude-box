@@ -1,7 +1,13 @@
 apiVersion: v1
+kind: Namespace
+metadata:
+  name: claude-box
+---
+apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: claude-box-workspace
+  namespace: claude-box
 spec:
   accessModes:
   - ReadWriteOnce
@@ -13,6 +19,7 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: claude-box
+  namespace: claude-box
 spec:
   containers:
   - name: claude
