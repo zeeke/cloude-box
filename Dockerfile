@@ -1,11 +1,11 @@
-FROM ubuntu:22.04
+FROM fedora:42
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
+RUN dnf install -y \
     curl \
     git \
     ca-certificates \
     ripgrep \
-    && rm -rf /var/lib/apt/lists/*
+    && dnf clean all
 
 RUN curl -fsSL https://claude.ai/install.sh | bash
 
