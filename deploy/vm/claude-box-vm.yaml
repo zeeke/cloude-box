@@ -37,7 +37,7 @@ spec:
           - name: secrets
             disk:
               bus: virtio
-              serial: SECRETS
+            serial: SECRETS
       volumes:
       - name: rootdisk
         containerDisk:

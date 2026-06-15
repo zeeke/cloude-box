@@ -63,7 +63,7 @@ curl -fsSL https://raw.githubusercontent.com/zeeke/cloude-box/main/deploy.sh | s
 Connect to the box:
 
 ```bash
-kubectl exec -it claude-box -- claude
+kubectl exec -it claude-box-0 -n claude-box -- tmux attach -t claude
 ```
 
 ## CI Setup
